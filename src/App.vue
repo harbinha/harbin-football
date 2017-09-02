@@ -2,28 +2,14 @@
   <div id="app">
     <router-link to="/">Home</router-link>
     <router-link to="/players">Players</router-link>
-    {{ players }}
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VueFire from 'vuefire'
-  import Firebase from 'firebase'
-  import {config} from './firebaseConfig'
+  import {db} from './firebase';
 
-  Vue.use(VueFire)
-  let db = Firebase.initializeApp(config).database();
-  let playersRef = db.ref('players')
-  export default {
-    name: 'app',
-    firebase () {
-      return {
-        players: playersRef
-      };
-    }
-  };
+  export default {name: 'app'};
 </script>
 
 <style>

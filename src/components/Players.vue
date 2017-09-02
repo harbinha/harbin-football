@@ -6,19 +6,14 @@
   </div>
 </template>
 <script>
+import {db} from '../firebase';
+
 export default {
     name: 'players',
-    data () {
-        return {
-            players: [
-                { name: 'Hunter' },
-                { name: 'Mom'    },
-                { name: 'Dad'    },
-                { name: 'Andrew' },
-                { name: 'Lauren?'},
-                { name: 'Rachel?'},
-            ]
-        }
+    firebase () {
+      return {
+        players: db.ref('players')
+      };
     }
 }
 </script>
