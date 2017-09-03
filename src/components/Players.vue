@@ -2,6 +2,7 @@
   <div class="players">
     <div v-for="player in players" :key="player.name">
         {{ player.name }}
+        <span class="pool" v-for="p in player.pool" :key="player.name">{{ p }}</span>
     </div>
   </div>
 </template>
@@ -20,5 +21,8 @@ export default {
 <style scoped>
     .players {
         color: coral;
+    }
+    .pool {
+        margin: 0 10px;
     }
 </style>
