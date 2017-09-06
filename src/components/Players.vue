@@ -7,14 +7,14 @@
   </div>
 </template>
 <script>
-import {db} from '../firebase';
+import { db } from '../firebase';
 
 export default {
     name: 'players',
     firebase () {
-      return {
-        players: db.ref('players')
-      };
+        return {
+            players: db.ref('players')
+        }
     }
 }
 </script>

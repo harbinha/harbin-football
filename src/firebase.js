@@ -1,4 +1,5 @@
-import Firebase from 'firebase'
-import {config} from './firebaseConfig'
+import Firebase from 'firebase';
+import { config } from './firebaseConfig';
 
-export const db = Firebase.initializeApp(config).database();
+export const fb = Firebase.initializeApp(config);
+export const db = fb.database();
