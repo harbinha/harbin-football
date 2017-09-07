@@ -73,7 +73,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
     #signedInUser {
         margin: 0 auto;
         width: 250px;

@@ -2,7 +2,8 @@
   <div class="players">
     <div v-for="player in players" :key="player.name">
         {{ player.name }}
-        <span class="pool" v-for="p in player.pool" :key="player.name">{{ p }}</span>
+        <!-- TODO: p.name a thing?  -->
+        <span class="pool" v-for="p in player.pool" :key="p.name">{{ p }}</span>
     </div>
   </div>
 </template>
