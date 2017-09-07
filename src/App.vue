@@ -1,13 +1,21 @@
 <template>
   <div id="app">
-     <!-- <div hidden> -->
-      <a id="signOut" @click="signOut" class="waves-effect waves-light btn hidden">Sign Out</a>
-    <!-- </div>  -->
-
-    <router-link to="/">Home</router-link>
-    <router-link to="/players">Players</router-link>
-    <router-link to="/week">Week</router-link>
-    <router-link to="/score">Score</router-link>
+    <nav>
+      <div class="indigo lighten-2 nav-wrapper">
+        <a href="#" class="left brand-logo">Harbin Football Pool</a>
+        <ul id="nav-mobile" class="right">
+          <li id="signOut" @click="signOut" class="sign-out">
+            <a>sign out</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div>
+      <router-link to="/">Home</router-link>
+      <router-link to="/players">Players</router-link>
+      <router-link to="/week">Week</router-link>
+      <router-link to="/score">Score</router-link>
+    </div>
 
     <div id="signIn" class="hidden"></div>
 
@@ -95,12 +103,12 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #2c3e50; */
+  /* margin-top: 60px; */
 }
 
 .signed-in-user {
@@ -109,5 +117,8 @@ export default {
 }
 .hidden {
   display: none;
+}
+.sign-out {
+  cursor: pointer;
 }
 </style>
