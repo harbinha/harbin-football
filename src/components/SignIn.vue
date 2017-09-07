@@ -41,7 +41,7 @@ export default {
             this.signedIn = true;
             this.displayName = user.displayName;
             this.photoURL = user.photoURL;
-            return false;
+            return true;
         },
         onAuthChange: function (user) {
             if (user) {
@@ -54,6 +54,7 @@ export default {
         },
         getAuthConfig: function () {
             return {
+                signInSuccessUrl: '/#/week',
                 signInOptions: [
                     {
                         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -65,6 +66,7 @@ export default {
                 callbacks: {
                     'signInSuccess': (user, credential, redirectUrl) => {
                         this.handleSignedInUser(user);
+                        return true;
                     }
                 }
             }
