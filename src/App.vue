@@ -10,13 +10,20 @@
         </ul>
       </div>
     </nav>
-    <div>
-      <router-link to="/">Home</router-link>
-      <router-link to="/players">Players</router-link>
-      <router-link to="/week">Week</router-link>
-      <router-link to="/score">Score</router-link>
-    </div>
 
+    <div class="row router-links">
+      <div class="col s12">
+        <span class="col s4">
+          <router-link to="/players">players</router-link>
+        </span>
+        <span class="col s4">
+          <router-link to="/week">week</router-link>
+        </span>
+        <span class="col s4">
+          <router-link to="/score">score</router-link>
+        </span>
+      </div>
+    </div>
     <div id="signIn" class="hidden"></div>
 
     <div id="signedInUser" class="signed-in-user hidden">
@@ -75,7 +82,7 @@ export default {
         this.ui.start('#signIn', this.config);
       }
     },
-    signOut: function () {
+    signOut: function() {
       firebase.auth().signOut();
     },
     getAuthConfig: function() {
@@ -115,10 +122,17 @@ export default {
   margin: 0 auto;
   width: 250px;
 }
+
 .hidden {
   display: none;
 }
+
 .sign-out {
   cursor: pointer;
+}
+
+.router-links {
+  text-align: center;
+  margin-top:20px;
 }
 </style>

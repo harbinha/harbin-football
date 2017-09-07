@@ -3,13 +3,14 @@
         
         <div v-for="game in schedule" :key="game.date" class="schedule">
             <div class="row schedule">
-                 <div @click="pickTeam(game.away)" class="col s5 team">
-                     <img class="team-logo" :src="'/static/team-logos/' + game.away.toLowerCase() + '.svg'">
+                 <div class="col s5 team">
+                     <img @click="pickTeam" :data-team="game.away" class="team-logo" :src="'/static/team-logos/' + game.away.toLowerCase() + '.svg'">
                 </div> 
-                
-                <div class="col s2">@</div>
-                <div @click="pickTeam(game.home)" class="col s5 team">
-                    <img class="team-logo" :src="'/static/team-logos/' + game.home.toLowerCase() + '.svg'">
+                <div class="col s2">
+                    <p>@</p>
+                </div>
+                <div class="col s5 team">
+                    <img @click="pickTeam" :data-team="game.home" class="team-logo" :src="'/static/team-logos/' + game.home.toLowerCase() + '.svg'">
                 </div>
                 
             </div>
@@ -34,8 +35,10 @@ export default {
         }
     },
     methods: {
-        pickTeam: function (team) {
-            console.log('picking team..' + team);
+        pickTeam: function (e) {
+            let el = e.currentTarget;
+            el.classList.add('selected');
+            console.log('picking team..' + el.dataset.team);
             console.log(this.curWeek[0]['.value'])
         },
         dothing: function () {
@@ -48,11 +51,21 @@ export default {
 <style scoped>
     .team {
         cursor: pointer;
+        justify-content: center;
+        display: flex;
     }
     .schedule {
+        height: 100px;
         margin-top: 20px;
     }
+    .schedule .col {
+        height: 100%;
+        text-align: center;
+    }
     .team-logo {
-        max-width: 100%;
+        width: 100%;
+    }
+    .selected {
+        border: 1px solid blue;
     }
 </style>
