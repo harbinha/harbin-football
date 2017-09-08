@@ -1,6 +1,6 @@
 export const users = {
     1: {
-        name: 'Hunter Harbin',
+        name: 'Hunter',
         email: 'harbinhajmu@gmail.com',
         scores: {
             spread: 0,
@@ -8,7 +8,7 @@ export const users = {
         }
     },
     2: {
-        name: 'Lauren Stearns',
+        name: 'Lauren',
         email: 'stearnslh@gmail.com',
         scores: {
             spread: 0,

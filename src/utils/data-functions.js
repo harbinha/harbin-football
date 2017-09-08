@@ -1,4 +1,8 @@
 import { db } from '../firebase';
+import { teams } from '../database/teams';
+import { users } from '../database/users';
+import { week1 } from '../database/schedule/week1';
+import { picks } from '../database/picks/week1-picks';
 export const utils = {
     createPools: function () {
         db.ref('pools/family').set({
@@ -56,6 +60,18 @@ export const utils = {
                 lauren: 'Patriots'
             }
         });
+    },
+    setTeams: function () {
+        db.ref('teams').set(teams);
+    },
+    setUsers: function () {
+        db.ref('users').set(users);
+    },
+    setWeek: function () {
+        db.ref('schedule/week1').set(week1);
+    },
+    setPicks: function () {
+        db.ref('picks').set(picks);
     }
 
 }

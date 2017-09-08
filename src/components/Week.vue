@@ -1,21 +1,24 @@
 <template>
     <div class="week">
+         {{_games}}
         
         <div v-for="game in schedule" :key="game.date" class="schedule">
             <div class="row schedule">
                  <div class="col s5 team">
-                     <img @click="pickTeam" :data-team="game.away" class="team-logo" :src="'/static/team-logos/' + game.away.toLowerCase() + '.svg'">
+                     {{game.home}}
+                      <!-- <img @click="pickTeam" :data-team="game.away" class="team-logo" :src="'/static/team-logos/' + game.away.toLowerCase() + '.svg'">  -->
                 </div> 
                 <div class="col s2">
                     <p>@</p>
                 </div>
                 <div class="col s5 team">
-                    <img @click="pickTeam" :data-team="game.home" class="team-logo" :src="'/static/team-logos/' + game.home.toLowerCase() + '.svg'">
+                    {{game.away}}
+                    <!-- <img @click="pickTeam" :data-team="game.home" class="team-logo" :src="'/static/team-logos/' + game.home.toLowerCase() + '.svg'"> -->
                 </div>
                 
             </div>
         </div>
-        <!-- <button @click="dothing">create schedule</button>  -->
+         <button @click="dothing">create schedule</button>  
         
         <!-- <div class="container">
             {{curWeek}}
@@ -28,10 +31,42 @@ import { utils } from '../utils/data-functions';
 
 export default {
     name: 'week',
-    firebase () {
+    data () {
         return {
-            schedule: db.ref('/schedule/week1'),
-            curWeek: db.ref('/current')
+            _games: []
+        }
+    },
+    firebase () {
+        this._games = [];
+        let schedule = db.ref('schedule/week1'),
+            teams = db.ref('teams');
+
+        schedule.once('value', snap => {
+            let week = snap.toJSON();
+
+            teams.once('value', teamSnap => {
+                let teamJSON = teamSnap.toJSON();
+                
+                Object.keys(week).forEach(game => {
+                    let homeKey = week[game].home;
+                    let awayKey = week[game].away;
+                    let fullGame = Object.assign({}, week[game]);
+                    fullGame.home = teamJSON[week[game].home].name;
+                    fullGame.away = teamJSON[week[game].away].name;
+                    fullGame.favorite = teamJSON[week[game].favorite].name;
+                    
+                    this._games.push(fullGame);
+                    
+                });
+            });
+            console.log(this._games);
+
+        });
+        
+        return {
+            schedule: schedule,
+            curWeek: db.ref('current'),
+            teams: teams
         }
     },
     methods: {
@@ -42,7 +77,7 @@ export default {
             console.log(this.curWeek[0]['.value'])
         },
         dothing: function () {
-            // utils.picks();
+            // utils.setPicks();
             console.log('done');
         }
     }
