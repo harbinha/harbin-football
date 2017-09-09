@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { db } from '../firebase';
+import { db } from './firebase';
 import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 
@@ -67,7 +67,6 @@ export default {
     },
     onAuthChange: function(user) {
       if (user) {
-        console.log(user)
         this.displayName = user.displayName;
         this.photoURL = user.photoURL;
         document.getElementById('signIn').classList.add('hidden');

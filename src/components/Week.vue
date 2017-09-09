@@ -1,45 +1,56 @@
 <template>
     <div class="week">
-         {{_games}}
-        
-        <div v-for="game in schedule" :key="game.date" class="schedule">
+         <div v-for="(game, index) in games" :key="game.date" class="schedule" :data-game="index">
             <div class="row schedule">
-                 <div class="col s5 team">
-                     {{game.home}}
-                      <!-- <img @click="pickTeam" :data-team="game.away" class="team-logo" :src="'/static/team-logos/' + game.away.toLowerCase() + '.svg'">  -->
-                </div> 
-                <div class="col s2">
-                    <p>@</p>
+                 <div @click="pickTeam" :data-team="game.away"  class="col s4 team">
+                       <img class="team-logo" :src="_getLogoRef(game.away)">  
+                 </div> 
+                <div class="col s4">
+                    <!-- <p>@</p> -->
+                    <div class="row picks">
+                        <div class="spread types">
+                            <input class="inline" :name="`groupSpread${index}`" type="radio" :id="`awaySpread${index}`" />
+                            <label class="away inline" :for="`awaySpread${index}`"></label>
+                            
+                            <div class="vs-text">spread</div>
+                            
+                            <input :name="`groupSpread${index}`" type="radio" :id="`homeSpread${index}`" />
+                            <label class="home inline" :for="`homeSpread${index}`"></label>
+                        </div>
+
+                        <div class="straight types">
+                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`awayStraight${index}`" />
+                            <label class="away inline" :for="`awayStraight${index}`"></label>
+                            
+                            <div class="vs-text">straight</div>
+                            
+                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`homeStraight${index}`" />
+                            <label class="home inline   ":for="`homeStraight${index}`"></label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col s5 team">
-                    {{game.away}}
-                    <!-- <img @click="pickTeam" :data-team="game.home" class="team-logo" :src="'/static/team-logos/' + game.home.toLowerCase() + '.svg'"> -->
+                <div @click="pickTeam" :data-team="game.home" class="col s4 team">
+                     <img class="team-logo" :src="_getLogoRef(game.home)">  
                 </div>
-                
             </div>
-        </div>
-         <button @click="dothing">create schedule</button>  
-        
-        <!-- <div class="container">
-            {{curWeek}}
-        </div> -->
+        </div>  
+           <button @click="dothing">create schedule</button> 
     </div>
 </template>
 <script>
+import firebase from 'firebase';
 import { db } from '../firebase';
 import { utils } from '../utils/data-functions';
 
 export default {
     name: 'week',
-    data () {
-        return {
-            _games: []
-        }
+    created () {
+        firebase.auth().onAuthStateChanged(this.onAuthChange);
     },
-    firebase () {
-        this._games = [];
-        let schedule = db.ref('schedule/week1'),
-            teams = db.ref('teams');
+    data () {
+        let schedule = db.ref('schedule/week1');
+        let teams = db.ref('teams');
+        let _games = [];
 
         schedule.once('value', snap => {
             let week = snap.toJSON();
@@ -55,30 +66,47 @@ export default {
                     fullGame.away = teamJSON[week[game].away].name;
                     fullGame.favorite = teamJSON[week[game].favorite].name;
                     
-                    this._games.push(fullGame);
+                    _games.push(fullGame);
                     
                 });
             });
-            console.log(this._games);
-
         });
-        
         return {
-            schedule: schedule,
-            curWeek: db.ref('current'),
-            teams: teams
-        }
+            games: _games
+        };
     },
     methods: {
+        onAuthChange: function (user) {
+            console.log(user);
+            this.getUserRef(user).then(picks => {
+                console.log(picks);
+            });
+        },
+        getUserRef: function (user) {
+            return new Promise((resolve, reject) => {
+                let userRef = db.ref('users').orderByChild('email').equalTo(user.email).on('value', snap => {
+                    let userKey = Object.keys(snap.toJSON());
+                    console.log(`logged in user: ${userKey}`);
+                    // get the users picks
+                    let pickRef = db.ref(`picks/${userKey}/week1`).on('value', pickSnap => {
+                        resolve(pickSnap.toJSON());
+                    });
+                });
+            });
+        },
         pickTeam: function (e) {
             let el = e.currentTarget;
-            el.classList.add('selected');
+            el.classList.add('z-depth-5');
             console.log('picking team..' + el.dataset.team);
-            console.log(this.curWeek[0]['.value'])
+
+            // 
         },
         dothing: function () {
             // utils.setPicks();
-            console.log('done');
+        },
+        _getLogoRef: function(team) {
+            let t = team.split(' ');
+            return `/static/team-logos/${t[t.length-1].toLowerCase()}.svg`;
         }
     }
 };
@@ -102,5 +130,21 @@ export default {
     }
     .selected {
         border: 1px solid blue;
+    }
+    [type="radio"]:not(:checked)+label {
+        padding-left: 25px;
+    }
+    .types {
+        display: flex;
+        justify-content: center;
+    }
+    .picks {
+        transform: translateY(50%);
+    }
+    .away {
+        padding-left: 40px !important;
+    }
+    .home {
+        margin-left: 14px !important;
     }
 </style>

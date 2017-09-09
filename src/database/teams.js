@@ -26,7 +26,7 @@ export const teams = {
     25: { name: 'Denver Broncos',       record: { win: 0, loss: 0, tie: 0 } },
     26: { name: 'Kansas City Chiefs',   record: { win: 0, loss: 0, tie: 0 } },
     27: { name: 'Los Angeles Chargers', record: { win: 0, loss: 0, tie: 0 } },
-    28: { name: 'Oakland Raiders ',     record: { win: 0, loss: 0, tie: 0 } },
+    28: { name: 'Oakland Raiders',     record: { win: 0, loss: 0, tie: 0 } },
     29: { name: 'Arizona Cardinals',    record: { win: 0, loss: 0, tie: 0 } },
     30: { name: 'Los Angeles Rams',     record: { win: 0, loss: 0, tie: 0 } },
     31: { name: 'San Francisco 49ers',  record: { win: 0, loss: 0, tie: 0 } },
