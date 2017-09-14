@@ -2,38 +2,38 @@
     <div class="week">
          <div v-for="(game, index) in games" :key="game.date" class="schedule" :data-game="index">
             <div class="row schedule">
-                <div  :data-team="game.away"  class="col s4 team">
-                       <img class="team-logo" :src="_getLogoRef(game.away)">  
+                <div :data-team="game.away"  class="col s4 team">
+                       <img class="team-logo" :src="_getLogoRef(game.awayTeamName)">  
                 </div> 
                 <div class="col s4">
                     <div class="row picks">
                         <div class="spread types">
-                            <input class="inline" :name="`groupSpread${index}`" type="radio" :id="`awaySpread${index}`" />
+                            <input class="inline" :name="`groupSpread${index}`" type="radio" :id="`awaySpread${index}`" :checked="`${game.pickedSpread == game.away ? 'checked' : ''}`"/>
                             <label @click="pickTeamSpread(game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
                             
                             <div class="vs-text">spread</div>
                             
-                            <input :name="`groupSpread${index}`" type="radio" :id="`homeSpread${index}`" />
+                            <input :name="`groupSpread${index}`" type="radio" :id="`homeSpread${index}`" :checked="`${game.pickedSpread == game.home ? 'checked' : ''}`"/>
                             <label @click="pickTeamSpread(game.home, index)" :data-team="game.home" class="home inline" :for="`homeSpread${index}`"></label>
                         </div>
 
                         <div class="straight types">
-                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`awayStraight${index}`" />
+                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`awayStraight${index}`" :checked="`${game.pickedStraight == game.away ? 'checked' : ''}`"/>
                             <label @click="pickTeamStraight(game.away, index)" :data-team="game.away" class="away inline" :for="`awayStraight${index}`"></label>
                             
                             <div class="vs-text">straight</div>
                             
-                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`homeStraight${index}`" />
+                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`homeStraight${index}`" :checked="`${game.pickedStraight == game.home ? 'checked' : ''}`"/>
                             <label @click="pickTeamStraight(game.home, index)" :data-team="game.home" class="home inline":for="`homeStraight${index}`"></label>
                         </div>
                     </div>
                 </div>
                 <div class="col s4 team">
-                     <img class="team-logo" :src="_getLogoRef(game.home)">  
+                     <img class="team-logo" :src="_getLogoRef(game.homeTeamName)">  
                 </div>
             </div>
         </div>  
-           <button @click="dothing">create schedule</button> 
+           <!-- <button @click="dothing">create schedule</button>  -->
     </div>
 </template>
 <script>
@@ -47,27 +47,39 @@ export default {
         firebase.auth().onAuthStateChanged(this.onAuthChange);
     },
     data () {
+        
         let schedule = db.ref('schedule/week1');
         let teams = db.ref('teams');
         let _games = [];
 
         schedule.once('value', snap => {
             let week = snap.toJSON();
+            
+            this.getUserPromise.then(userKey => {
+                this.userPicksRef.on('value', picksSnap => {
+                    let allWeekPicks = picksSnap.toJSON();
+                    // console.log(allWeekPicks);
 
-            teams.once('value', teamSnap => {
-                let teamJSON = teamSnap.toJSON();
-                
-                Object.keys(week).forEach(game => {
-                    let homeKey = week[game].home;
-                    let awayKey = week[game].away;
-                    let fullGame = Object.assign({}, week[game]);
-                    fullGame.home = teamJSON[week[game].home].name;
-                    fullGame.away = teamJSON[week[game].away].name;
-                    fullGame.favorite = teamJSON[week[game].favorite].name;
-                    
-                    _games.push(fullGame);
+                    teams.once('value', teamSnap => {
+                        let teamJSON = teamSnap.toJSON();
+                        for (let game in week) {
+                            
+                            let homeKey = week[game].home;
+                            let awayKey = week[game].away;
+                            let fullGame = Object.assign({}, week[game]);
+                            fullGame.homeTeamName = teamJSON[week[game].home].name;
+                            fullGame.awayTeamName = teamJSON[week[game].away].name;
+                            fullGame.favoriteTeamName = teamJSON[week[game].favorite].name;
+
+                            fullGame.pickedSpread = allWeekPicks[game].spread;
+                            fullGame.pickedStraight = allWeekPicks[game].straight;
+
+                            _games.push(fullGame);
+                        }
+                    });
                 });
             });
+            
         });
         return {
             games: _games
@@ -77,30 +89,15 @@ export default {
         onAuthChange: function (user) {
             console.log(user);
             if (user) {
-                this.getUserPromise = this.getUserRef(user).then(userKey => {
-                    this.setCurrentPicks(userKey);
-                });
+                this.getUserPromise = this.getUserRef(user);
             }
-        },
-        setCurrentPicks: function (key) {
-            this.userPicksRef.on('value', picksSnap => {
-                let allWeekPicks = picksSnap.toJSON();
-                Object.keys(allWeekPicks).forEach(gameIndex => {
-                    console.log(allWeekPicks[gameIndex]);
-
-                    // spreads
-                    if (allWeekPicks[gameIndex].spread !== 0) {
-                        document.getElementById('')
-                    }
-                });
-            });
         },
         getUserRef: function (user) {
             return new Promise((resolve, reject) => {
                 let userRef = db.ref('users').orderByChild('email').equalTo(user.email).on('value', snap => {
                     this.userKey = Object.keys(snap.toJSON());
                     this.userPicksRef = db.ref(`picks/${this.userKey}/week1`);
-                    console.log(`logged in user: ${this.userKey}`);
+                    // console.log(`logged in user: ${this.userKey}`);
                     // get the users picks
                     resolve(this.userKey);
                 });

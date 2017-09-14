@@ -33,7 +33,7 @@
         </div>
         <div class="card-stacked">
           <div class="card-content">
-            <p>Welcome {{ displayName }}</p>
+            <p class="welcome-message">Welcome {{ displayName }}</p>
           </div>
         </div>
       </div>
@@ -108,15 +108,6 @@ export default {
 </script>
 
 <style>
-#app {
-  /* font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50; */
-  /* margin-top: 60px; */
-}
-
 .signed-in-user {
   margin: 0 auto;
   width: 250px;
@@ -132,6 +123,10 @@ export default {
 
 .router-links {
   text-align: center;
-  margin-top:20px;
+  margin-top: 20px;
+}
+
+.welcome-message {
+  text-align: center;
 }
 </style>
