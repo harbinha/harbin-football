@@ -9,22 +9,22 @@
                     <div class="row picks">
                         <div class="spread types">
                             <input class="inline" :name="`groupSpread${index}`" type="radio" :id="`awaySpread${index}`" :checked="`${game.pickedSpread == game.away ? 'checked' : ''}`"/>
-                            <label @click="pickTeamSpread(game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
+                            <label @click="pickTeamSpread(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
                             
                             <div class="vs-text">spread</div>
                             
                             <input :name="`groupSpread${index}`" type="radio" :id="`homeSpread${index}`" :checked="`${game.pickedSpread == game.home ? 'checked' : ''}`"/>
-                            <label @click="pickTeamSpread(game.home, index)" :data-team="game.home" class="home inline" :for="`homeSpread${index}`"></label>
+                            <label @click="pickTeamSpread(game, game.home, index)" :data-team="game.home" class="home inline" :for="`homeSpread${index}`"></label>
                         </div>
 
                         <div class="straight types">
                             <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`awayStraight${index}`" :checked="`${game.pickedStraight == game.away ? 'checked' : ''}`"/>
-                            <label @click="pickTeamStraight(game.away, index)" :data-team="game.away" class="away inline" :for="`awayStraight${index}`"></label>
+                            <label @click="pickTeamStraight(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awayStraight${index}`"></label>
                             
                             <div class="vs-text">straight</div>
                             
                             <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`homeStraight${index}`" :checked="`${game.pickedStraight == game.home ? 'checked' : ''}`"/>
-                            <label @click="pickTeamStraight(game.home, index)" :data-team="game.home" class="home inline":for="`homeStraight${index}`"></label>
+                            <label @click="pickTeamStraight(game, game.home, index)" :data-team="game.home" class="home inline":for="`homeStraight${index}`"></label>
                         </div>
                     </div>
                 </div>
@@ -97,17 +97,22 @@ export default {
                 let userRef = db.ref('users').orderByChild('email').equalTo(user.email).on('value', snap => {
                     this.userKey = Object.keys(snap.toJSON());
                     this.userPicksRef = db.ref(`picks/${this.userKey}/week1`);
-                    // console.log(`logged in user: ${this.userKey}`);
-                    // get the users picks
                     resolve(this.userKey);
                 });
             });
         },
-        pickTeamSpread: function (team, index) {
+        pickTeamSpread: function (game, team, index) {
+            if (team === game.home) {
+                document.getElementById(`awaySpread${index}`).checked = false;
+                document.getElementById(`homeSpread${index}`).checked = true;
+            } else if (team === game.away) {
+                document.getElementById(`awaySpread${index}`).checked = true;
+                document.getElementById(`homeSpread${index}`).checked = false;
+            }
             console.log('picking.. ' + team)
             this.setPick(team, index, 'spread')
         },
-        pickTeamStraight: function (team, index) {
+        pickTeamStraight: function (game, team, index) {
             this.setPick(team, index, 'straight')
         },
         setPick: function (team, index, type) {
