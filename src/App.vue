@@ -11,7 +11,7 @@
       </div>
     </nav>
 
-    <div class="row router-links">
+    <div v-if="signedIn" class="row router-links">
       <div class="col s12">
         <span class="col s4">
           <router-link to="/players">players</router-link>
@@ -53,26 +53,24 @@ export default {
   data() {
     return {
       displayName: '',
-      photoURL: ''
+      photoURL: '',
+      signedIn: false
     }
   },
   created() {
     firebase.auth().onAuthStateChanged(this.onAuthChange);
   },
   methods: {
-    handleSignedInUser: function(user) {
-      this.displayName = user.displayName;
-      this.photoURL = user.photoURL;
-      return true;
-    },
     onAuthChange: function(user) {
       if (user) {
+        this.signedIn = true;
         this.displayName = user.displayName;
         this.photoURL = user.photoURL;
         document.getElementById('signIn').classList.add('hidden');
         document.getElementById('signedInUser').classList.remove('hidden');
         document.getElementById('signOut').classList.remove('hidden');
       } else {
+        this.signedIn = false;
         document.getElementById('signIn').classList.remove('hidden');
         document.getElementById('signOut').classList.add('hidden');
         document.getElementById('signedInUser').classList.add('hidden');
@@ -82,11 +80,12 @@ export default {
       }
     },
     signOut: function() {
+      this.signedIn = false;
       firebase.auth().signOut();
     },
     getAuthConfig: function() {
       return {
-        signInSuccessUrl: '/#/week',
+        signInSuccessUrl: '/#/week/1', //TODO: this should get current week
         signInOptions: [
           {
             provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -94,13 +93,7 @@ export default {
           },
           firebase.auth.EmailAuthProvider.PROVIDER_ID
         ],
-        signInFlow: 'popup',
-        callbacks: {
-          'signInSuccess': (user, credential, redirectUrl) => {
-            this.handleSignedInUser(user);
-            return true;
-          }
-        }
+        signInFlow: 'popup'
       }
     }
   }

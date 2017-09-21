@@ -11,6 +11,7 @@ const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/players', name: 'Players', component: Players },
   { path: '/week/:week', name: 'Week', component: Week },
+  { path: '/week', name: 'Week', component: Week },
   { path: '/score', name: 'Score', component: Score }
 ];
 export default new Router({routes});

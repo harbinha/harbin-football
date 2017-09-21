@@ -1,25 +1,9 @@
 <template>
     <div class="week">
-        <select @change="onWeekSelection" style="display: block;">
+        <select v-if="signedIn" @change="onWeekSelection" style="display: block;">
             <option v-for="week in weekPicker" :value="week.value">
                 {{week.text}}
             </option>
-            <!-- <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-            <option>13</option>
-            <option>14</option>
-            <option>15</option>
-            <option>16</option> -->
         </select>
 
          <div v-for="(game, index) in games" :key="game.date" class="schedule" :data-game="index">
@@ -65,45 +49,18 @@ import { utils } from '../utils/data-functions';
 
 export default {
     name: 'week',
+    watch: {
+        '$route' (to, from) {
+            console.log('ROUTE CHANGE');
+            console.log(to);
+            if (this.$route.params.week) this.games = this.getHydratedWeek(to.params.week);
+        }
+    },
     created () {  
         console.log(`week: ${this.$route.params.week}`);
         firebase.auth().onAuthStateChanged(this.onAuthChange);
     },
     data () {
-        
-        let schedule = db.ref('schedule/week1');
-        let teams = db.ref('teams');
-        let _games = [];
-
-        schedule.once('value', snap => {
-            let week = snap.toJSON();
-            
-            this.getUserPromise.then(userKey => {
-                this.userPicksRef.on('value', picksSnap => {
-                    let allWeekPicks = picksSnap.toJSON();
-                    // console.log(allWeekPicks);
-
-                    teams.once('value', teamSnap => {
-                        let teamJSON = teamSnap.toJSON();
-                        for (let game in week) {
-                            
-                            let homeKey = week[game].home;
-                            let awayKey = week[game].away;
-                            let fullGame = Object.assign({}, week[game]);
-                            fullGame.homeTeamName = teamJSON[week[game].home].name;
-                            fullGame.awayTeamName = teamJSON[week[game].away].name;
-                            fullGame.favoriteTeamName = teamJSON[week[game].favorite].name;
-
-                            fullGame.pickedSpread = allWeekPicks[game].spread;
-                            fullGame.pickedStraight = allWeekPicks[game].straight;
-
-                            _games.push(fullGame);
-                        }
-                    });
-                });
-            });
-            
-        });
         let weekPicker = [];
         for (let i = 0; i < 16; i++) {
             weekPicker.push({
@@ -112,18 +69,63 @@ export default {
             });
         }
         return {
-            games: _games,
-            weekPicker: weekPicker
+            games: [],
+            weekPicker: weekPicker,
+            signedIn: false
         };
     },
     methods: {
+        getHydratedWeek: function (week=1) {
+            let schedule = db.ref(`schedule/week${week}`);
+            let teams = db.ref('teams');
+            let _games = [];
+
+            schedule.once('value', snap => {
+                let week = snap.toJSON();
+                
+                this.getUserPromise.then(userKey => {
+                    this.userPicksRef.on('value', picksSnap => {
+                        let allWeekPicks = picksSnap.toJSON();
+                        // console.log(allWeekPicks);
+
+                        teams.once('value', teamSnap => {
+                            let teamJSON = teamSnap.toJSON();
+                            for (let game in week) {
+                                
+                                let homeKey = week[game].home;
+                                let awayKey = week[game].away;
+                                let fullGame = Object.assign({}, week[game]);
+                                fullGame.homeTeamName = teamJSON[week[game].home].name;
+                                fullGame.awayTeamName = teamJSON[week[game].away].name;
+                                fullGame.favoriteTeamName = teamJSON[week[game].favorite].name;
+
+                                fullGame.pickedSpread = allWeekPicks[game].spread;
+                                fullGame.pickedStraight = allWeekPicks[game].straight;
+
+                                _games.push(fullGame);
+                            }
+                        });
+                    });
+                });
+                
+            });
+            return _games;
+        },
         onWeekSelection: function (event) {
             this.$router.push(`/week/${event.currentTarget.value}`)
         },
         onAuthChange: function (user) {
+            console.log('user user user')
             console.log(user);
             if (user) {
+                this.signedIn = true;
                 this.getUserPromise = this.getUserRef(user);
+                if (this.$route.params.week) this.games = this.getHydratedWeek(this.$route.params.week)
+                console.log('user exists?')
+            } else {
+                this.signedIn = false;
+                this.getUserPromise = this.games = null;
+                this.$router.push('/week')
             }
         },
         getUserRef: function (user) {
