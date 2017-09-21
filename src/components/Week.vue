@@ -7,12 +7,17 @@
         </select>
 
          <div v-for="(game, index) in games" :key="game.date" class="schedule" :data-game="index">
+             
             <div class="row schedule">
+                <div>{{game.favoriteTeamName}} must win by {{game.spread}}</div>
+                <div>{{game.date}} @ {{game.time}} on {{game.channel}}</div>
+                
                 <div :data-team="game.away"  class="col s4 team">
                        <img class="team-logo" :src="_getLogoRef(game.awayTeamName)">  
                 </div> 
                 <div class="col s4">
                     <div class="row picks">
+                        
                         <div class="spread types">
                             <input class="inline" type="checkbox" :id="`awaySpread${index}`" :checked="`${game.pickedSpread == game.away ? 'checked' : ''}`" />
                             <label @click="pickTeamSpread(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
@@ -38,6 +43,7 @@
                      <img class="team-logo" :src="_getLogoRef(game.homeTeamName)">  
                 </div>
             </div>
+            
         </div>  
            <!-- <button @click="dothing">create schedule</button>  -->
     </div>
@@ -167,11 +173,13 @@ export default {
         display: flex;
     }
     .schedule {
-        height: 100px;
+        border-bottom: 1px solid rgba(100,100,100, .6);
+        height: 150px;
         margin-top: 20px;
+        text-align: center;
     }
     .schedule .col {
-        height: 100%;
+        max-height: 100px; 
         text-align: center;
     }
     .team-logo {
