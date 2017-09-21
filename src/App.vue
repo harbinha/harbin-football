@@ -17,7 +17,7 @@
           <router-link to="/players">players</router-link>
         </span>
         <span class="col s4">
-          <router-link to="/week">week</router-link>
+          <router-link to="/week/1">week</router-link>
         </span>
         <span class="col s4">
           <router-link to="/score">score</router-link>

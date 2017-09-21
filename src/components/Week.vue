@@ -1,5 +1,27 @@
 <template>
     <div class="week">
+        <select @change="onWeekSelection" style="display: block;">
+            <option v-for="week in weekPicker" :value="week.value">
+                {{week.text}}
+            </option>
+            <!-- <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option> -->
+        </select>
+
          <div v-for="(game, index) in games" :key="game.date" class="schedule" :data-game="index">
             <div class="row schedule">
                 <div :data-team="game.away"  class="col s4 team">
@@ -8,22 +30,22 @@
                 <div class="col s4">
                     <div class="row picks">
                         <div class="spread types">
-                            <input class="inline" :name="`groupSpread${index}`" type="radio" :id="`awaySpread${index}`" :checked="`${game.pickedSpread == game.away ? 'checked' : ''}`"/>
+                            <input class="inline" type="checkbox" :id="`awaySpread${index}`" :checked="`${game.pickedSpread == game.away ? 'checked' : ''}`" />
                             <label @click="pickTeamSpread(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
-                            
+
                             <div class="vs-text">spread</div>
-                            
-                            <input :name="`groupSpread${index}`" type="radio" :id="`homeSpread${index}`" :checked="`${game.pickedSpread == game.home ? 'checked' : ''}`"/>
+
+                            <input class="inline" type="checkbox" :id="`homeSpread${index}`" :checked="`${game.pickedSpread == game.home ? 'checked' : ''}`"/>
                             <label @click="pickTeamSpread(game, game.home, index)" :data-team="game.home" class="home inline" :for="`homeSpread${index}`"></label>
                         </div>
 
                         <div class="straight types">
-                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`awayStraight${index}`" :checked="`${game.pickedStraight == game.away ? 'checked' : ''}`"/>
+                            <input class="inline" type="checkbox" :id="`awayStraight${index}`" :checked="`${game.pickedStraight == game.away ? 'checked' : ''}`"/>
                             <label @click="pickTeamStraight(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awayStraight${index}`"></label>
                             
                             <div class="vs-text">straight</div>
                             
-                            <input class="inline" :name="`groupStraight${index}`" type="radio" :id="`homeStraight${index}`" :checked="`${game.pickedStraight == game.home ? 'checked' : ''}`"/>
+                            <input class="inline" type="checkbox" :id="`homeStraight${index}`" :checked="`${game.pickedStraight == game.home ? 'checked' : ''}`"/>
                             <label @click="pickTeamStraight(game, game.home, index)" :data-team="game.home" class="home inline":for="`homeStraight${index}`"></label>
                         </div>
                     </div>
@@ -43,7 +65,8 @@ import { utils } from '../utils/data-functions';
 
 export default {
     name: 'week',
-    created () {
+    created () {  
+        console.log(`week: ${this.$route.params.week}`);
         firebase.auth().onAuthStateChanged(this.onAuthChange);
     },
     data () {
@@ -81,11 +104,22 @@ export default {
             });
             
         });
+        let weekPicker = [];
+        for (let i = 0; i < 16; i++) {
+            weekPicker.push({
+                text: `week ${i+1}`,
+                value: i+1
+            });
+        }
         return {
-            games: _games
+            games: _games,
+            weekPicker: weekPicker
         };
     },
     methods: {
+        onWeekSelection: function (event) {
+            this.$router.push(`/week/${event.currentTarget.value}`)
+        },
         onAuthChange: function (user) {
             console.log(user);
             if (user) {
@@ -102,17 +136,11 @@ export default {
             });
         },
         pickTeamSpread: function (game, team, index) {
-            if (team === game.home) {
-                document.getElementById(`awaySpread${index}`).checked = false;
-                document.getElementById(`homeSpread${index}`).checked = true;
-            } else if (team === game.away) {
-                document.getElementById(`awaySpread${index}`).checked = true;
-                document.getElementById(`homeSpread${index}`).checked = false;
-            }
-            console.log('picking.. ' + team)
+            this.games[index].pickedSpread = team;
             this.setPick(team, index, 'spread')
         },
         pickTeamStraight: function (game, team, index) {
+            this.games[index].pickedStraight = team;
             this.setPick(team, index, 'straight')
         },
         setPick: function (team, index, type) {
