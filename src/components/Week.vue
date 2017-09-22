@@ -10,7 +10,8 @@
              
             <div class="row schedule">
                 <div>{{game.favoriteTeamName}} must win by {{game.spread}}</div>
-                <div>{{game.date}} @ {{game.time}} on {{game.channel}}</div>
+                <div>{{game.date}} @ {{game.time}} <span v-if="game.channel">on {{game.channel}}</span></div>
+               
                 
                 <div :data-team="game.away"  class="col s4 team">
                        <img class="team-logo" :src="_getLogoRef(game.awayTeamName)">  
@@ -19,22 +20,22 @@
                     <div class="row picks">
                         
                         <div class="spread types">
-                            <input class="inline" type="checkbox" :id="`awaySpread${index}`" :checked="`${game.pickedSpread == game.away ? 'checked' : ''}`" />
+                            <input class="inline" type="checkbox" :id="`awaySpread${index}`" :checked="`${game.pickedSpread === game.away ? 'checked' : ''}`" />
                             <label @click="pickTeamSpread(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
 
                             <div class="vs-text">spread</div>
 
-                            <input class="inline" type="checkbox" :id="`homeSpread${index}`" :checked="`${game.pickedSpread == game.home ? 'checked' : ''}`"/>
+                            <input class="inline" type="checkbox" :id="`homeSpread${index}`" :checked="`${game.pickedSpread === game.home ? 'checked' : ''}`"/>
                             <label @click="pickTeamSpread(game, game.home, index)" :data-team="game.home" class="home inline" :for="`homeSpread${index}`"></label>
                         </div>
 
                         <div class="straight types">
-                            <input class="inline" type="checkbox" :id="`awayStraight${index}`" :checked="`${game.pickedStraight == game.away ? 'checked' : ''}`"/>
+                            <input class="inline" type="checkbox" :id="`awayStraight${index}`" :checked="`${game.pickedStraight === game.away ? 'checked' : ''}`"/>
                             <label @click="pickTeamStraight(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awayStraight${index}`"></label>
                             
                             <div class="vs-text">straight</div>
                             
-                            <input class="inline" type="checkbox" :id="`homeStraight${index}`" :checked="`${game.pickedStraight == game.home ? 'checked' : ''}`"/>
+                            <input class="inline" type="checkbox" :id="`homeStraight${index}`" :checked="`${game.pickedStraight === game.home ? 'checked' : ''}`"/>
                             <label @click="pickTeamStraight(game, game.home, index)" :data-team="game.home" class="home inline":for="`homeStraight${index}`"></label>
                         </div>
                     </div>
@@ -45,7 +46,7 @@
             </div>
             
         </div>  
-           <!-- <button @click="dothing">create schedule</button>  -->
+             <button @click="dothing">create schedule</button>   
     </div>
 </template>
 <script>
@@ -57,9 +58,7 @@ export default {
     name: 'week',
     watch: {
         '$route' (to, from) {
-            console.log('ROUTE CHANGE');
-            console.log(to);
-            if (this.$route.params.week) this.games = this.getHydratedWeek(to.params.week);
+            if (to.params.week) this.games = this.getHydratedWeek(to.params.week);
         }
     },
     created () {  
@@ -81,8 +80,12 @@ export default {
         };
     },
     methods: {
-        getHydratedWeek: function (week=1) {
-            let schedule = db.ref(`schedule/week${week}`);
+        getHydratedWeek: function (weekKey) {
+            
+            console.log('HYDRATING FOR WEEK: ' + weekKey)
+            let _weekRefKey = 'schedule/week' + weekKey;
+            console.log('trying to get week.. ' + _weekRefKey)
+            let schedule = db.ref(_weekRefKey);
             let teams = db.ref('teams');
             let _games = [];
 
@@ -90,9 +93,12 @@ export default {
                 let week = snap.toJSON();
                 
                 this.getUserPromise.then(userKey => {
+                    let _userPicksRefKey = 'picks/' + userKey + '/week' + weekKey;
+                    console.log('user ref pick key: ' + _userPicksRefKey)
+                    this.userPicksRef = db.ref(_userPicksRefKey);
                     this.userPicksRef.on('value', picksSnap => {
                         let allWeekPicks = picksSnap.toJSON();
-                        // console.log(allWeekPicks);
+                        console.log(allWeekPicks);
 
                         teams.once('value', teamSnap => {
                             let teamJSON = teamSnap.toJSON();
@@ -121,13 +127,11 @@ export default {
             this.$router.push(`/week/${event.currentTarget.value}`)
         },
         onAuthChange: function (user) {
-            console.log('user user user')
-            console.log(user);
             if (user) {
                 this.signedIn = true;
                 this.getUserPromise = this.getUserRef(user);
+                console.log('why not working.. ' + this.$route.params.week)
                 if (this.$route.params.week) this.games = this.getHydratedWeek(this.$route.params.week)
-                console.log('user exists?')
             } else {
                 this.signedIn = false;
                 this.getUserPromise = this.games = null;
@@ -138,7 +142,6 @@ export default {
             return new Promise((resolve, reject) => {
                 let userRef = db.ref('users').orderByChild('email').equalTo(user.email).on('value', snap => {
                     this.userKey = Object.keys(snap.toJSON());
-                    this.userPicksRef = db.ref(`picks/${this.userKey}/week1`);
                     resolve(this.userKey);
                 });
             });
@@ -157,7 +160,7 @@ export default {
             });
         },
         dothing: function () {
-            // utils.setPicks();
+            utils.setPicks();
         },
         _getLogoRef: function(team) {
             let t = team.split(' ');
@@ -183,7 +186,8 @@ export default {
         text-align: center;
     }
     .team-logo {
-        width: 100%;
+        max-width: 100%;
+        height: 100px;
     }
     .selected {
         border: 1px solid blue;

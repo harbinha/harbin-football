@@ -2,7 +2,9 @@ import { db } from '../firebase';
 import { teams } from '../database/teams';
 import { users } from '../database/users';
 import { week1 } from '../database/schedule/week1';
-import { picks } from '../database/picks/week1-picks';
+import { week3 } from '../database/schedule/week3';
+import { week4 } from '../database/schedule/week4';
+import { picks } from '../database/picks/picks';
 export const utils = {
     createPools: function () {
         db.ref('pools/family').set({
@@ -68,10 +70,13 @@ export const utils = {
         db.ref('users').set(users);
     },
     setWeek: function () {
-        db.ref('schedule/week1').set(week1);
+        db.ref('schedule/week3').set(week3);
+        db.ref('schedule/week4').set(week4);
     },
+    //!!!!!!!!!CAREFUL!!!!!!!!!!!
+    // this will wipe out all picks, ONLY FOR NEXT WEEK SETUP
     setPicks: function () {
-        db.ref('picks').set(picks);
+        db.ref('picks').update(picks);
     }
 
 }
