@@ -1,24 +1,28 @@
 <template>
     <div class="week">
         <select v-if="signedIn" @change="onWeekSelection" style="display: block;">
-            <option v-for="week in weekPicker" :value="week.value">
+            <option v-for="(week, index) in weekPicker" :value="week.value" :selected="$route.params.week-1 === index">
                 {{week.text}}
             </option>
         </select>
 
-         <div v-for="(game, index) in games" :key="game.date" class="schedule" :data-game="index">
+         <div v-for="(game, index) in games" :key="game.date"  :data-game="index">
              
             <div class="row schedule">
-                <div>{{game.favoriteTeamName}} must win by {{game.spread}}</div>
-                <div>{{game.date}} @ {{game.time}} <span v-if="game.channel">on {{game.channel}}</span></div>
-               
-                
-                <div :data-team="game.away"  class="col s4 team">
-                       <img class="team-logo" :src="_getLogoRef(game.awayTeamName)">  
+                <span v-if="game.winner">
+                    <div>{{game.awayTeamName}}: {{game.awayFinal}}</div>
+                    <div>{{game.homeTeamName}}: {{game.homeFinal}}</div>
+                    <div>{{game.favoriteTeamName}} had to win by {{game.spread}}</div>
+                </span>
+                <span v-else>
+                    <div v-if="game.favoriteTeamName != 'TBD'">{{game.favoriteTeamName}} must win by {{game.spread}}</div>
+                    <div>{{game.date}} <span v-if="game.time">@ {{game.time}}</span> <span v-if="game.channel">on {{game.channel}}</span></div>
+                </span>
+                <div v-bind:class="[game.winner === game.away ? 'winner' : game.winner === game.home ? 'loser' : '', 'col s4 team']">
+                    <img class="team-logo" :src="_getLogoRef(game.awayTeamName)">  
                 </div> 
                 <div class="col s4">
-                    <div class="row picks">
-                        
+                    <div v-if="!game.homeFinal" class="row picks">
                         <div class="spread types">
                             <input class="inline" type="checkbox" :id="`awaySpread${index}`" :checked="`${game.pickedSpread === game.away ? 'checked' : ''}`" />
                             <label @click="pickTeamSpread(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
@@ -39,14 +43,31 @@
                             <label @click="pickTeamStraight(game, game.home, index)" :data-team="game.home" class="home inline":for="`homeStraight${index}`"></label>
                         </div>
                     </div>
+                    <div v-else>
+                        <div class="picks">
+                            <div class="pick-results row"> 
+                                <i v-if="game.pickedSpread === game.away && pickedCorrectSpread(game, 'away')" class="material-icons away-result winner-check">check</i>
+                                <i v-else-if="game.pickedSpread === game.away" class="material-icons away-result loser-x">close</i> 
+                                <span class="col s12">spread</span>
+                                <i v-if="game.pickedSpread === game.home && pickedCorrectSpread(game, 'home')" class="material-icons home-result winner-check">check</i> 
+                                <i v-else-if="game.pickedSpread === game.home" class="material-icons home-result loser-x">close</i> 
+                            </div>
+                            <div class="pick-results row">
+                                <i v-if="game.pickedStraight === game.away && game.pickedStraight === game.winner" class="material-icons away-result winner-check">check</i>
+                                <i v-else-if="game.pickedStraight === game.away" class="material-icons away-result loser-x">close</i> 
+                                <span class="col s12">straight</span>
+                                <i v-if="game.pickedStraight === game.home && game.pickedStraight === game.winner" class="material-icons home-result winner-check">check</i>
+                                <i v-else-if="game.pickedStraight === game.home" class="material-icons home-result loser-x">close</i>                             
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col s4 team">
-                     <img class="team-logo" :src="_getLogoRef(game.homeTeamName)">  
+                <div v-bind:class="[game.winner === game.home ? 'winner' : game.winner === game.away ? 'loser' : '', 'col s4 team']">
+                    <img class="team-logo" :src="_getLogoRef(game.homeTeamName)">  
                 </div>
             </div>
-            
         </div>  
-             <button @click="dothing">create schedule</button>   
+        <!-- <button @click="dothing">create schedule</button>     -->
     </div>
 </template>
 <script>
@@ -62,16 +83,18 @@ export default {
         }
     },
     created () {  
-        console.log(`week: ${this.$route.params.week}`);
         firebase.auth().onAuthStateChanged(this.onAuthChange);
     },
     data () {
         let weekPicker = [];
         for (let i = 0; i < 16; i++) {
-            weekPicker.push({
-                text: `week ${i+1}`,
-                value: i+1
-            });
+            // if (i !== 1) {
+                weekPicker.push({
+                    text: `week ${i+1}`,
+                    value: i+1
+                });
+            // }
+            
         }
         return {
             games: [],
@@ -80,11 +103,15 @@ export default {
         };
     },
     methods: {
+        pickedCorrectSpread: function (game, side) {
+            if (side === 'away') {
+                return game.winner === game.pickedSpread && game.awayFinal >= (game.homeFinal + game.spread)
+            } else {
+                return game.winner === game.pickedSpread && game.homeFinal >= (game.awayFinal + game.spread)
+            }
+        },
         getHydratedWeek: function (weekKey) {
-            
-            console.log('HYDRATING FOR WEEK: ' + weekKey)
             let _weekRefKey = 'schedule/week' + weekKey;
-            console.log('trying to get week.. ' + _weekRefKey)
             let schedule = db.ref(_weekRefKey);
             let teams = db.ref('teams');
             let _games = [];
@@ -94,11 +121,9 @@ export default {
                 
                 this.getUserPromise.then(userKey => {
                     let _userPicksRefKey = 'picks/' + userKey + '/week' + weekKey;
-                    console.log('user ref pick key: ' + _userPicksRefKey)
                     this.userPicksRef = db.ref(_userPicksRefKey);
                     this.userPicksRef.on('value', picksSnap => {
                         let allWeekPicks = picksSnap.toJSON();
-                        console.log(allWeekPicks);
 
                         teams.once('value', teamSnap => {
                             let teamJSON = teamSnap.toJSON();
@@ -130,7 +155,6 @@ export default {
             if (user) {
                 this.signedIn = true;
                 this.getUserPromise = this.getUserRef(user);
-                console.log('why not working.. ' + this.$route.params.week)
                 if (this.$route.params.week) this.games = this.getHydratedWeek(this.$route.params.week)
             } else {
                 this.signedIn = false;
@@ -159,29 +183,31 @@ export default {
                 this.userPicksRef.child(`${index+1}/${type}`).set(team);
             });
         },
-        dothing: function () {
-            utils.setPicks();
-        },
         _getLogoRef: function(team) {
             let t = team.split(' ');
             return `/static/team-logos/${t[t.length-1].toLowerCase()}.svg`;
-        }
+        },
+
+    //todo: remove this hacky shit
+        dothing: function () {
+            utils.setWeek();
+        },
     }
 };
 </script>
 <style scoped>
     .team {
-        cursor: pointer;
-        justify-content: center;
         display: flex;
+        justify-content: center;
+        position: relative;
     }
     .schedule {
         border-bottom: 1px solid rgba(100,100,100, .6);
-        height: 150px;
+        height: auto;
         margin-top: 20px;
         text-align: center;
     }
-    .schedule .col {
+    .schedule.col {
         max-height: 100px; 
         text-align: center;
     }
@@ -207,5 +233,31 @@ export default {
     }
     .home {
         margin-left: 14px !important;
+    }
+    .winner {
+        border-bottom: 1px solid green;
+    }
+    .away-result.loser-x,
+    .away-result.winner-check {
+        left: 0;
+    }
+    .home-result.loser-x,
+    .home-result.winner-check {
+        right: 0;
+    }
+    .winner-check {
+        color: green;
+        position: absolute;
+    }
+    .loser {
+        border-bottom: 1px solid red;
+    }
+    .loser-x {
+        color: red;
+        position: absolute;
+    }
+    .pick-results {
+        position: relative;
+        margin-bottom: 5px;
     }
 </style>

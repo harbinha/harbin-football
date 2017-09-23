@@ -11,7 +11,7 @@
       </div>
     </nav>
 
-    <div v-if="signedIn" class="row router-links">
+    <!-- <div v-if="signedIn" class="row router-links">
       <div class="col s12">
         <span class="col s4">
           <router-link to="/players">players</router-link>
@@ -23,7 +23,7 @@
           <router-link to="/score">score</router-link>
         </span>
       </div>
-    </div>
+    </div> -->
     <div id="signIn" class="hidden"></div>
 
     <div id="signedInUser" class="signed-in-user hidden">
@@ -69,6 +69,7 @@ export default {
         document.getElementById('signIn').classList.add('hidden');
         document.getElementById('signedInUser').classList.remove('hidden');
         document.getElementById('signOut').classList.remove('hidden');
+        if (!this.$route.params.week) this.$router.push('/week/1')
       } else {
         this.signedIn = false;
         document.getElementById('signIn').classList.remove('hidden');

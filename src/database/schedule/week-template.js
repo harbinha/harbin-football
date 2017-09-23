@@ -1,9 +1,11 @@
 export const weekTemplate = {
-    1: { //key for this game
-        home: 0, //maps to teams/3 (patriots)
-        away: 0, //maps to team/26 (chiefs)
-        spread: 0, //teams/3 must win by 9 points
-        favorite: 0, //maps to team/3
+    1: {
+        home: 0,
+        away: 0,
+        homeName: "",
+        awayName: "",
+        spread: 0,
+        favorite: 0,
         time: "",
         date: "",
         channel: "",
@@ -12,6 +14,8 @@ export const weekTemplate = {
     2: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -22,6 +26,8 @@ export const weekTemplate = {
     3: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -32,6 +38,8 @@ export const weekTemplate = {
     4: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -42,6 +50,8 @@ export const weekTemplate = {
     5: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -52,6 +62,8 @@ export const weekTemplate = {
     6: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -62,6 +74,8 @@ export const weekTemplate = {
     7: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -72,6 +86,8 @@ export const weekTemplate = {
     8: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -82,6 +98,8 @@ export const weekTemplate = {
     9: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -92,6 +110,8 @@ export const weekTemplate = {
     10: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -102,6 +122,8 @@ export const weekTemplate = {
     11: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -112,6 +134,8 @@ export const weekTemplate = {
     12: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -122,6 +146,8 @@ export const weekTemplate = {
     13: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -132,6 +158,8 @@ export const weekTemplate = {
     14: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -142,6 +170,8 @@ export const weekTemplate = {
     15: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",
@@ -152,6 +182,8 @@ export const weekTemplate = {
     16: {
         home: 0,
         away: 0,
+        homeName: "",
+        awayName: "",
         spread: 0,
         favorite: 0,
         time: "",

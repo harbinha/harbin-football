@@ -1,3 +1,4 @@
+
 export const picks = {
     1: { //maps to users/1 (hunter)
         week1: {
