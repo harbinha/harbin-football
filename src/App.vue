@@ -59,6 +59,9 @@ export default {
   },
   created() {
     firebase.auth().onAuthStateChanged(this.onAuthChange);
+    db.ref('/current/week').once('value', snap => {
+        this.currentWeek = snap.toJSON();
+    });
   },
   methods: {
     onAuthChange: function(user) {
@@ -69,7 +72,7 @@ export default {
         document.getElementById('signIn').classList.add('hidden');
         document.getElementById('signedInUser').classList.remove('hidden');
         document.getElementById('signOut').classList.remove('hidden');
-        if (!this.$route.params.week) this.$router.push('/week/1')
+        if (!this.$route.params.week) this.$router.push('/week/' + this.currentWeek)
       } else {
         this.signedIn = false;
         document.getElementById('signIn').classList.remove('hidden');
@@ -86,7 +89,7 @@ export default {
     },
     getAuthConfig: function() {
       return {
-        signInSuccessUrl: '/#/week/1', //TODO: this should get current week
+        // signInSuccessUrl: '/#/week/' + this.currentWeek
         signInOptions: [
           {
             provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,

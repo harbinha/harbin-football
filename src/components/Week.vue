@@ -88,13 +88,10 @@ export default {
     data () {
         let weekPicker = [];
         for (let i = 0; i < 16; i++) {
-            // if (i !== 1) {
-                weekPicker.push({
-                    text: `week ${i+1}`,
-                    value: i+1
-                });
-            // }
-            
+            weekPicker.push({
+                text: `week ${i+1}`,
+                value: i+1
+            });   
         }
         return {
             games: [],
