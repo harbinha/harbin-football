@@ -25,24 +25,6 @@ export const utils = {
         });
         console.log(`updated ${name}`);
     },
-    createSchedule: function () {
-        db.ref('schedule/week1').set({
-            1: {
-                date: 'Thursday, September 7',
-                time: '8:30 PM',
-                channel: 'NBC',
-                home: 'Patriots',
-                away: 'Chiefs'
-            },
-            2: {
-                date: 'Sunday, September 10',
-                time: '1:00 PM',
-                channel: 'CBS',
-                home: 'Bills',
-                away: 'Jets'
-            }
-        });
-    },
     
     setTeams: function () {
         db.ref('teams').set(teams);
@@ -51,7 +33,7 @@ export const utils = {
         db.ref('users').set(users);
     },
     setWeek: function () {
-        db.ref('schedule/week3').set(week3);
+        db.ref('schedule/week4').set(week4);
         // db.ref('schedule/week4').set(week4);
     },
     //!!!!!!!!!CAREFUL!!!!!!!!!!!

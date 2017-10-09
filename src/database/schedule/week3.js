@@ -19,7 +19,9 @@ export const week3 = {
         time: "9:30 AM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 19,
+        homeFinal: 44,
+        awayFinal: 7
     },
     3: {
         home: 1, //Bills
@@ -29,7 +31,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 1,
+        homeFinal: 26,
+        awayFinal: 16
     },
     4: {
         home: 13, //Bears
@@ -39,7 +43,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 13,
+        homeFinal: 23,
+        awayFinal: 17
     },
     5: {
         home: 22, //Panthers
@@ -49,7 +55,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 23,
+        homeFinal: 13,
+        awayFinal: 34
     },
     6: {
         home: 16, //Vikings
@@ -59,7 +67,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 16,
+        homeFinal: 34,
+        awayFinal: 17
     },
     7: {
         home: 18, //Colts
@@ -69,7 +79,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 18,
+        homeFinal: 31,
+        awayFinal: 28
     },
     8: {
         home: 4, //Jets
@@ -79,7 +91,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 4,
+        homeFinal: 20,
+        awayFinal: 6
     },
     9: {
         home: 3, //Patriots
@@ -89,7 +103,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 3,
+        homeFinal: 36,
+        awayFinal: 33
     },
     10: {
         home: 14, //Lions
@@ -99,7 +115,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 21,
+        homeFinal: 26,
+        awayFinal: 30
     },
     11: {
         home: 7, //Eagles
@@ -109,7 +127,9 @@ export const week3 = {
         time: "1:00 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 7,
+        homeFinal: 27,
+        awayFinal: 24
     },
     12: {
         home: 20, //Titans
@@ -119,7 +139,9 @@ export const week3 = {
         time: "4:05 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 20,
+        homeFinal: 33,
+        awayFinal: 27
     },
     13: {
         home: 27, //Chargers
@@ -129,7 +151,9 @@ export const week3 = {
         time: "4:25 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 26,
+        homeFinal: 10,
+        awayFinal: 24
     },
     14: {
         home: 15, //Packers
@@ -139,7 +163,9 @@ export const week3 = {
         time: "4:25 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 15,
+        homeFinal: 27,
+        awayFinal: 24
     },
     15: {
         home: 8, //Redskins
@@ -149,7 +175,9 @@ export const week3 = {
         time: "8:30 PM",
         date: "Sunday 9/24",
         channel: "",
-        winner: null
+        winner: 8,
+        homeFinal: 27,
+        awayFinal: 10
     },
     16: {
         home: 29, //Cardinals
@@ -159,6 +187,8 @@ export const week3 = {
         time: "8:30 PM",
         date: "Monday 9/25",
         channel: "",
-        winner: null
+        winner: 5,
+        homeFinal: 17,
+        awayFinal: 28
     }
 };
