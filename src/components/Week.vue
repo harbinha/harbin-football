@@ -22,7 +22,7 @@
                     <img class="team-logo" :src="_getLogoRef(game.awayTeamName)">  
                 </div> 
                 <div class="col s4">
-                    <div v-if="!game.homeFinal" class="row picks">
+                    <div v-if="!game.homeFinal && !game.awayFinal" class="row picks">
                         <div class="spread types">
                             <input class="inline" type="checkbox" :id="`awaySpread${index}`" :checked="`${game.pickedSpread === game.away ? 'checked' : ''}`" />
                             <label @click="pickTeamSpread(game, game.away, index)" :data-team="game.away" class="away inline" :for="`awaySpread${index}`"></label>
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>  
-        <!-- <button @click="dothing">create schedule</button>     -->
+        <button @click="dothing">create schedule</button>    
     </div>
 </template>
 <script>
@@ -101,10 +101,18 @@ export default {
     },
     methods: {
         pickedCorrectSpread: function (game, side) {
+            if (game.home === 29) {
+                console.log(`winner: ${game.winner}; `)
+                debugger;
+            }
+            // if the selected spread team is the winner and they were not the favorite, it's a correct pick
+            if (game.winner !== game.favorite && game.pickedSpread === game.winner) return true;
             if (side === 'away') {
-                return game.winner === game.pickedSpread && game.awayFinal >= (game.homeFinal + game.spread)
+                return (game.winner === game.pickedSpread && game.awayFinal >= (game.homeFinal + game.spread)) ||
+                        (game.winner !== game.pickedSpread && game.homeFinal < (game.awayFinal + game.spread))
             } else {
-                return game.winner === game.pickedSpread && game.homeFinal >= (game.awayFinal + game.spread)
+                return (game.winner === game.pickedSpread && game.homeFinal >= (game.awayFinal + game.spread)) ||
+                        (game.winner !== game.pickedSpread && game.awayFinal < (game.homeFinal + game.spread))
             }
         },
         getHydratedWeek: function (weekKey) {

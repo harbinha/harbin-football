@@ -5,7 +5,7 @@ import { week1 } from '../database/schedule/week1';
 import { week3 } from '../database/schedule/week3';
 import { week4 } from '../database/schedule/week4';
 import { week5 } from '../database/schedule/week5';
-import { week6 } from '../database/schedule/week6';
+import { week6 } from '../database/schedule/week4';
 import { picks } from '../database/picks/picks';
 export const utils = {
     createPools: function () {
@@ -34,7 +34,7 @@ export const utils = {
         db.ref('users').set(users);
     },
     setWeek: function () {
-        db.ref('schedule/week4').set(week4);
+        // db.ref('schedule/week4').set(week4);
         // db.ref('schedule/week4').set(week4);
     },
     //!!!!!!!!!CAREFUL!!!!!!!!!!!
@@ -64,22 +64,28 @@ export const utils = {
     },
 
     teamNameToKey: function () {
-        Object.keys(week6).forEach(function (gameKey) {
+        Object.keys(week4).forEach(function (gameKey) {
             Object.keys(teams).forEach(function (teamKey) {
-                if (teams[teamKey].name.toLowerCase().indexOf(week6[gameKey].homeName.toLowerCase()) > -1) {
-                    week6[gameKey].home = parseInt(teamKey);
-                } else if (teams[teamKey].name.toLowerCase().indexOf(week6[gameKey].awayName.toLowerCase()) > -1) {
-                    week6[gameKey].away = parseInt(teamKey);
+                if (teams[teamKey].name.toLowerCase().indexOf(week4[gameKey].homeName.toLowerCase()) > -1) {
+                    week4[gameKey].home = parseInt(teamKey);
+                } else if (teams[teamKey].name.toLowerCase().indexOf(week4[gameKey].awayName.toLowerCase()) > -1) {
+                    week4[gameKey].away = parseInt(teamKey);
                 }
 
-                if (teams[teamKey].name.toLowerCase().indexOf(week6[gameKey].favoriteName.toLowerCase()) > -1) {
-                    week6[gameKey].favorite = parseInt(teamKey);
-                } else if (teams[teamKey].name.toLowerCase().indexOf(week6[gameKey].favoriteName.toLowerCase()) > -1) {
-                    week6[gameKey].favorite = parseInt(teamKey);
+                if (teams[teamKey].name.toLowerCase().indexOf(week4[gameKey].favoriteName.toLowerCase()) > -1) {
+                    week4[gameKey].favorite = parseInt(teamKey);
+                } else if (teams[teamKey].name.toLowerCase().indexOf(week4[gameKey].favoriteName.toLowerCase()) > -1) {
+                    week4[gameKey].favorite = parseInt(teamKey);
+                }
+
+                if (teams[teamKey].name.toLowerCase().indexOf(week4[gameKey].winnerName.toLowerCase()) > -1) {
+                    week4[gameKey].winner = parseInt(teamKey);
+                } else if (teams[teamKey].name.toLowerCase().indexOf(week4[gameKey].winnerName.toLowerCase()) > -1) {
+                    week4[gameKey].winner = parseInt(teamKey);
                 }
             });
         });
-        db.ref('schedule/week6').set(week6)
-        console.log(week6);
+        // db.ref('schedule/week4').set(week4)
+        console.log(week4);
     }
 }

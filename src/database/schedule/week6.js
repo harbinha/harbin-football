@@ -10,6 +10,7 @@ export const week6 = {
         time: "",
         date: "Thursday, October 12",
         channel: "",
+        winnerName: "Eagles",
         winner: 6,
         homeFinal: 23,
         awayFinal: 28
@@ -25,6 +26,7 @@ export const week6 = {
         time: "1:00 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -40,6 +42,7 @@ export const week6 = {
         time: "1:00 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -55,6 +58,7 @@ export const week6 = {
         time: "1:00 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -70,6 +74,7 @@ export const week6 = {
         time: "1:00 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -85,6 +90,7 @@ export const week6 = {
         time: "1:00 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -100,6 +106,7 @@ export const week6 = {
         time: "1:00 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -115,6 +122,7 @@ export const week6 = {
         time: "1:00 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -130,6 +138,7 @@ export const week6 = {
         time: "4:05 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -145,6 +154,7 @@ export const week6 = {
         time: "4:05 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -160,6 +170,7 @@ export const week6 = {
         time: "4:25 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -175,6 +186,7 @@ export const week6 = {
         time: "4:25 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -190,6 +202,7 @@ export const week6 = {
         time: "8:30 PM",
         date: "Sunday, October 15",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0
@@ -205,6 +218,7 @@ export const week6 = {
         time: "8:30 PM",
         date: "Monday, October 16",
         channel: "",
+        winnerName: "",
         winner: 0,
         homeFinal: 0,
         awayFinal: 0

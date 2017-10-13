@@ -7,9 +7,14 @@ export const week4 = {
         time: "8:25 PM",
         date: "Thursday, 9/28",
         channel: "",
+        winnerName: "Packers",
+        favoriteName: "Packers",
         winner: 15,
+        winnerName: "",
         homeFinal: 35,
-        awayFinal: 14
+        awayFinal: 14,
+        homeName: "Packers",
+        awayName: "Bears"
     },
     2: {
         home: 2, //Dolphins
@@ -19,7 +24,13 @@ export const week4 = {
         time: "9:30 AM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Saints",
+        favoriteName: "Saints",
+        winner: null,
+        homeFinal: 0,
+        awayFinal: 20,
+        homeName: "Dolphins",
+        awayName: "Saints"
     },
     3: {
         home: 3, //Patriots
@@ -29,7 +40,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Panthers",
+        favoriteName: "Patriots",
+        winner: null,
+        homeFinal: 30,
+        awayFinal: 33,
+        homeName: "Patriots",
+        awayName: "Panthers"
     },
     4: {
         home: 4, //Jets
@@ -39,7 +56,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Jets",
+        favoriteName: "Jaguars",
+        winner: null,
+        homeFinal: 23,
+        awayFinal: 20,
+        homeName: "Jets",
+        awayName: "Jaguars"
     },
     5: {
         home: 17, //Texans
@@ -49,7 +72,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Texans",
+        favoriteName: "Titans",
+        winner: null,
+        homeFinal: 57,
+        awayFinal: 14,
+        homeName: "Texans",
+        awayName: "Titans"
     },
     6: {
         home: 9, //Ravens
@@ -59,7 +88,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Steelers",
+        favoriteName: "Steelers",
+        winner: null,
+        homeFinal: 9,
+        awayFinal: 26,
+        homeName: "Ravens",
+        awayName: "Steelers"
     },
     7: {
         home: 11, //Browns
@@ -69,7 +104,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Bengals",
+        favoriteName: "Bengals",
+        winner: null,
+        homeFinal: 7,
+        awayFinal: 31,
+        homeName: "Browns",
+        awayName: "Bengals"
     },
     8: {
         home: 16, //Vikings
@@ -79,7 +120,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Lions",
+        favoriteName: "Vikings",
+        winner: null,
+        homeFinal: 7,
+        awayFinal: 14,
+        homeName: "Vikings",
+        awayName: "Lions"
     },
     9: {
         home: 5, //Cowboys
@@ -89,7 +136,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Rams",
+        favoriteName: "Cowboys",
+        winner: null,
+        homeFinal: 30,
+        awayFinal: 35,
+        homeName: "Cowboys",
+        awayName: "Rams"
     },
     10: {
         home: 21, //Falcons 
@@ -99,7 +152,13 @@ export const week4 = {
         time: "1:00 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Bills",
+        favoriteName: "Falcons",
+        winner: null,
+        homeFinal: 17,
+        awayFinal: 23,
+        homeName: "Falcons",
+        awayName: "Bills"
     },
     11: {
         home: 27, //Chargers
@@ -109,7 +168,13 @@ export const week4 = {
         time: "4:05 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Eagles",
+        favoriteName: "Chargers",
+        winner: null,
+        homeFinal: 24,
+        awayFinal: 26,
+        homeName: "Chargers",
+        awayName: "Eagles"
     },
     12: {
         home: 29, //Cardinals
@@ -119,7 +184,13 @@ export const week4 = {
         time: "4:05 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Cardinals",
+        favoriteName: "Cardinals",
+        winner: null,
+        homeFinal: 18,
+        awayFinal: 15,
+        homeName: "Cardinals",
+        awayName: "49ers"
     },
     13: {
         home: 24, //Buccaneers
@@ -129,7 +200,13 @@ export const week4 = {
         time: "4:05 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Buccaneers",
+        favoriteName: "Buccaneers",
+        winner: null,
+        homeFinal: 25,
+        awayFinal: 23,
+        homeName: "Buccaneers",
+        awayName: "Giants"
     },
     14: {
         home: 25, //Broncos
@@ -139,7 +216,13 @@ export const week4 = {
         time: "4:25 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Broncos",
+        favoriteName: "Broncos",
+        winner: null,
+        homeFinal: 16,
+        awayFinal: 10,
+        homeName: "Broncos",
+        awayName: "Raiders"
     },
     15: {
         home: 32, //Seahawks
@@ -149,7 +232,13 @@ export const week4 = {
         time: "8:30 PM",
         date: "Sunday, 10/1",
         channel: "",
-        winner: null
+        winnerName: "Seahawks",
+        favoriteName: "Seahawks",
+        winner: null,
+        homeFinal: 46,
+        awayFinal: 18,
+        homeName: "Seahawks",
+        awayName: "Colts"
     },
     16: {
         home: 26, //Chiefs
@@ -159,6 +248,12 @@ export const week4 = {
         time: "8:30 PM",
         date: "Monday, 10/2",
         channel: "",
-        winner: null
+        winnerName: "Chiefs",
+        favoriteName: "Chiefs",
+        winner: null,
+        homeFinal: 29,
+        awayFinal: 20,
+        homeName: "Chiefs",
+        awayName: "Redskins"
     }
 };
