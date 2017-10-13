@@ -4,12 +4,14 @@ export const week5 = {
         away: 0,
         homeName: "Buccaneers",
         awayName: "Patriots",
-        spread: 0,
+        spread: 'I DON\'T KNOW',
         favorite: 0,
+        favoriteName: "Patriots",
         time: "",
         date: "Thursday, October 5",
         channel: "",
         winner: 3,
+        winnerName: "Patriots",
         homeFinal: 14,
         awayFinal: 19
     },
@@ -23,7 +25,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Colts",
+        favoriteName: "Colts",
+        homeFinal: 26,
+        awayFinal: 23
     },
     3: {
         home: 0,
@@ -35,7 +41,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Jets",
+        favoriteName: "Browns",
+        homeFinal: 14,
+        awayFinal: 17
     },
     4: {
         home: 0,
@@ -47,7 +57,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Jaguars",
+        favoriteName: "Steelers",
+        homeFinal: 9,
+        awayFinal: 30
     },
     5: {
         home: 0,
@@ -59,7 +73,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Chargers",
+        favoriteName: "Giants",
+        homeFinal: 22,
+        awayFinal: 27
     },
     6: {
         home: 0,
@@ -71,7 +89,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Bengals",
+        favoriteName: "Bengals",
+        homeFinal: 20,
+        awayFinal: 16
     },
     7: {
         home: 0,
@@ -83,7 +105,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Panthers",
+        favoriteName: "Lions",
+        homeFinal: 24,
+        awayFinal: 27
     },
     8: {
         home: 0,
@@ -95,7 +121,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Dolphins",
+        favoriteName: "Titans",
+        homeFinal: 16,
+        awayFinal: 10
     },
     9: {
         home: 0,
@@ -107,7 +137,11 @@ export const week5 = {
         time: "1:00 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Eagles",
+        favoriteName: "Eagles",
+        homeFinal: 34,
+        awayFinal: 7
     },
     10: {
         home: 0,
@@ -119,7 +153,11 @@ export const week5 = {
         time: "4:05 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Ravens",
+        favoriteName: "Raiders",
+        homeFinal: 30,
+        awayFinal: 17
     },
     11: {
         home: 0,
@@ -131,7 +169,11 @@ export const week5 = {
         time: "4:05 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Seahawks",
+        favoriteName: "Rams",
+        homeFinal: 10,
+        awayFinal: 16
     },
     12: {
         home: 0,
@@ -143,7 +185,11 @@ export const week5 = {
         time: "4:25 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Packers",
+        favoriteName: "Cowboys",
+        homeFinal: 31,
+        awayFinal: 35
     },
     13: {
         home: 0,
@@ -155,7 +201,11 @@ export const week5 = {
         time: "8:30 PM",
         date: "Sunday, October 8",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Chiefs",
+        favoriteName: "Chiefs",
+        homeFinal: 34,
+        awayFinal: 42
     },
     14: {
         home: 0,
@@ -167,6 +217,10 @@ export const week5 = {
         time: "8:30 PM",
         date: "Monday, October 9",
         channel: "",
-        winner: null
+        winner: null,
+        winnerName: "Vikings",
+        favoriteName: "Vikings",
+        homeFinal: 17,
+        awayFinal: 20
     }
 };

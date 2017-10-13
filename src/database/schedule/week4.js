@@ -10,7 +10,6 @@ export const week4 = {
         winnerName: "Packers",
         favoriteName: "Packers",
         winner: 15,
-        winnerName: "",
         homeFinal: 35,
         awayFinal: 14,
         homeName: "Packers",

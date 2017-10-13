@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>  
-        <button @click="dothing">create schedule</button>    
+        <!-- <button @click="dothing">create schedule</button>     -->
     </div>
 </template>
 <script>
@@ -101,10 +101,6 @@ export default {
     },
     methods: {
         pickedCorrectSpread: function (game, side) {
-            if (game.home === 29) {
-                console.log(`winner: ${game.winner}; `)
-                debugger;
-            }
             // if the selected spread team is the winner and they were not the favorite, it's a correct pick
             if (game.winner !== game.favorite && game.pickedSpread === game.winner) return true;
             if (side === 'away') {
