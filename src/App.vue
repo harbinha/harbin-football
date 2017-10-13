@@ -94,8 +94,7 @@ export default {
           {
             provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             scopes: ['https://www.googleapis.com/auth/plus.login']
-          },
-          firebase.auth.EmailAuthProvider.PROVIDER_ID
+          }
         ],
         signInFlow: 'popup'
       }

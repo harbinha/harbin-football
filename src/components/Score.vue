@@ -17,6 +17,18 @@ export default {
     },
     created () {
         console.log(`scores ${this.players}`)
+        firebase.auth().onAuthStateChanged(this.onAuthChange);
+    },
+    onAuthChange: function (user) {
+        if (user) {
+            this.signedIn = true;
+            this.getUserPromise = this.getUserRef(user);
+            if (this.$route.params.week) this.games = this.getHydratedWeek(this.$route.params.week)
+        } else {
+            this.signedIn = false;
+            this.getUserPromise = this.games = null;
+            this.$router.push('/week')
+        }
     }
 }
 </script>

@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>  
-        <button @click="dothing">create schedule</button>    
+        <!-- <button @click="dothing">create schedule</button>     -->
     </div>
 </template>
 <script>
@@ -187,7 +187,7 @@ export default {
 
     //todo: remove this hacky shit
         dothing: function () {
-            utils.teamNameToKey();
+            utils.teamNameToKey()
         },
     }
 };
