@@ -13,15 +13,7 @@
 
     <!-- <div v-if="signedIn" class="row router-links">
       <div class="col s12">
-        <span class="col s4">
-          <router-link to="/players">players</router-link>
-        </span>
-        <span class="col s4">
-          <router-link to="/week/1">week</router-link>
-        </span>
-        <span class="col s4">
-          <router-link to="/score">score</router-link>
-        </span>
+        <router-link to="/scores">Scores</router-link>
       </div>
     </div> -->
     <div id="signIn" class="hidden"></div>
@@ -59,9 +51,7 @@ export default {
   },
   created() {
     firebase.auth().onAuthStateChanged(this.onAuthChange);
-    db.ref('/current/week').once('value', snap => {
-        this.currentWeek = snap.toJSON();
-    });
+   
   },
   methods: {
     onAuthChange: function(user) {
@@ -72,7 +62,11 @@ export default {
         document.getElementById('signIn').classList.add('hidden');
         document.getElementById('signedInUser').classList.remove('hidden');
         document.getElementById('signOut').classList.remove('hidden');
-        if (!this.$route.params.week) this.$router.push('/week/' + this.currentWeek)
+        if (!this.$route.params.week || this.$route.params.week === 'undefined') {
+          db.ref('current/week').once('value', snap => {
+            this.$router.push('/week/' + snap.toJSON())
+          });
+        }
       } else {
         this.signedIn = false;
         document.getElementById('signIn').classList.remove('hidden');

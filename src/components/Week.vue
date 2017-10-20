@@ -5,9 +5,12 @@
                 {{week.text}}
             </option>
         </select>
-
+        <!-- <div class="row col-desc schedule">
+            <div class="col s4">away</div>
+            <div class="col s4">@</div>
+            <div class="col s4">home</div>    
+        </div>  -->
          <div v-for="(game, index) in games" :key="game.date"  :data-game="index">
-             
             <div class="row schedule">
                 <span v-if="game.winner">
                     <div>{{game.awayTeamName}}: {{game.awayFinal}}</div>
@@ -53,10 +56,11 @@
                                 <i v-else-if="game.pickedSpread === game.home" class="material-icons home-result loser-x">close</i> 
                             </div>
                             <div class="pick-results row">
-                                <i v-if="game.pickedStraight === game.away && game.pickedStraight === game.winner" class="material-icons away-result winner-check">check</i>
+                                <!-- game.pickedStraight === game.winner -->
+                                <i v-if="game.pickedStraight === game.away && pickedCorrectStraight(game, 'away')" class="material-icons away-result winner-check">check</i>
                                 <i v-else-if="game.pickedStraight === game.away" class="material-icons away-result loser-x">close</i> 
                                 <span class="col s12">straight</span>
-                                <i v-if="game.pickedStraight === game.home && game.pickedStraight === game.winner" class="material-icons home-result winner-check">check</i>
+                                <i v-if="game.pickedStraight === game.home && pickedCorrectStraight(game, 'home')" class="material-icons home-result winner-check">check</i>
                                 <i v-else-if="game.pickedStraight === game.home" class="material-icons home-result loser-x">close</i>                             
                             </div>
                         </div>
@@ -71,10 +75,10 @@
     </div>
 </template>
 <script>
-import firebase from 'firebase';
+
 import { db } from '../firebase';
 import { utils } from '../utils/data-functions';
-
+import firebase from 'firebase';
 export default {
     name: 'week',
     watch: {
@@ -110,6 +114,9 @@ export default {
                 return (game.winner === game.pickedSpread && game.homeFinal >= (game.awayFinal + game.spread)) ||
                         (game.winner !== game.pickedSpread && game.awayFinal < (game.homeFinal + game.spread))
             }
+        },
+        pickedCorrectStraight: function (game, side) {
+            return game.pickedStraight === game.winner;
         },
         getHydratedWeek: function (weekKey) {
             let _weekRefKey = 'schedule/week' + weekKey;
@@ -201,6 +208,10 @@ export default {
         display: flex;
         justify-content: center;
         position: relative;
+    }
+    .col-desc {
+        margin-top: 20px;
+        text-align: center;
     }
     .schedule {
         border-bottom: 1px solid rgba(100,100,100, .6);
